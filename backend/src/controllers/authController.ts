@@ -1,30 +1,12 @@
 import z from "zod";
+import express from "express";
 import bcrypt from "bcrypt";
 import { UserModel } from "../models/User";
 import { Request, Response } from "express";
-
-
-const userSignupSchema = z.object({
-  username: z.string()
-    .min(3, "Username must be at least 3 characters long")
-    .max(20, "Username cannot be longer than 20 characters")
-    .regex(/^[a-zA-Z0-9_]+$/, "Username can only contain letters, numbers, and underscores"),
-  email: z.string()
-    .email("Invalid email address")
-    .min(3, "Email must be at least 3 characters long")
-    .max(50, "Email cannot be longer than 50 characters"),
-  password: z.string()
-    .min(8, "Password must be at least 8 characters long")
-    .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
-    .regex(/[a-z]/, "Password must contain at least one lowercase letter")
-    .regex(/[0-9]/, "Password must contain at least one number"),
-  confirmPassword: z.string()
-}).refine(data => data.password === data.confirmPassword, {
-  message: "Passwords don't match",
-  path: ["confirmPassword"]
-});
-
-
+import { userLoginSchema, userSignupSchema } from "../schemas/authSchemas";
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+dotenv.config();
 export const usersignup = async (req:Request , res: Response) => {
     const validatedData = userSignupSchema.parse(req.body);
     const { email, password, username } = validatedData;
@@ -53,4 +35,31 @@ export const usersignup = async (req:Request , res: Response) => {
     }
   
 };
+
+
+export const userLogin = async (req:express.Request , res: express.Response) => {
+    const { email, password } = userLoginSchema.parse(req.body);
+    const user = await UserModel.findOne({
+        $or: [
+            { email: email },
+        ]
+      });
+
+      console.log(user?.password);
+    // if (!user) {
+    //     return res.status(400).json({
+    //         message: "User not found",
+    //     })
+ 
+    const isPasswordValid = await bcrypt.compare(password, user?.password as string);
+
+    
+    const token = jwt.sign({ id: user?._id },  process.env.JWT_SECRET as string, { expiresIn: '1h' });
+    res.cookie("token", token, { httpOnly: true });
+    res.status(200).json({
+        message: "User logged in successfully",
+        token: token,
+    })
+
+  }
 
