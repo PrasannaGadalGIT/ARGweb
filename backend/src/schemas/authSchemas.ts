@@ -1,33 +1,14 @@
-import express from "express";
-import z from "zod";
-import dotenv from "dotenv";
-import bcrypt from "bcrypt";
-import connectDB from "./dbconnection";
-import cors from "cors";
-import authRoutes from "./routes/authRoutes";
-const corsOptions = {
-  origin: 'http://localhost:3000', 
-  optionsSuccessStatus: 200 
-};
-const app = express();
-app.use(express.json());
-app.use(cors(corsOptions));
-dotenv.config();
+import { z } from "zod";
 
-connectDB();
-
-const userLoginSchema = z.object({
+export const userLoginSchema = z.object({
   username: z.string()
     .min(3, "Username must be at least 3 characters long")
-    .max(20, "Username cannot be longer than 20 characters")
-    .regex(/^[a-zA-Z0-9_]+$/, "Username can only contain letters, numbers, and underscores"),
+    .max(20, "Username cannot be longer than 20 characters"),
   password: z.string()
     .min(8, "Password must be at least 8 characters long")
-    .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
-    .regex(/[a-z]/, "Password must contain at least one lowercase letter")
-    .regex(/[0-9]/, "Password must contain at least one number")
 });
-const userSignupSchema = z.object({
+
+export const userSignupSchema = z.object({
   username: z.string()
     .min(3, "Username must be at least 3 characters long")
     .max(20, "Username cannot be longer than 20 characters")
@@ -46,11 +27,3 @@ const userSignupSchema = z.object({
   message: "Passwords don't match",
   path: ["confirmPassword"]
 });
-
-app.use('/', authRoutes );
-
-
-app.listen(process.env.PORT, () => {
-  console.log(`Server is running on port ${process.env.PORT}`);
-}
-);

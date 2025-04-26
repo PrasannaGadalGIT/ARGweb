@@ -1,8 +1,8 @@
 import React from 'react'
-
+import styles from './home.module.css'
 const page = () => {
   return (
-    <div>Home </div>
+    <div className={styles.navbar}>Home </div>
   )
 }
 
