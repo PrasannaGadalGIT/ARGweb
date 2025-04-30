@@ -46,19 +46,19 @@ export const userLogin = async (req:express.Request , res: express.Response) => 
       });
 
       console.log(user?.password);
-    // if (!user) {
-    //     return res.status(400).json({
-    //         message: "User not found",
-    //     })
  
     const isPasswordValid = await bcrypt.compare(password, user?.password as string);
 
-    
-    const token = jwt.sign({ id: user?._id },  process.env.JWT_SECRET as string, { expiresIn: '1h' });
-    res.cookie("token", token, { httpOnly: true });
-    res.status(200).json({
-        message: "User logged in successfully",
-        token: token,
+    if(isPasswordValid){
+      const token = jwt.sign({ id: user?._id },  process.env.JWT_SECRET as string, { expiresIn: '1h' });
+      res.cookie("token", token, { httpOnly: true });
+      res.status(200).json({
+          message: "User logged in successfully",
+          token: token,
+      })
+    }
+   res.status(400).json({
+        message: "Invalid email or password",
     })
 
   }
