@@ -1,7 +1,6 @@
 import { Suspense } from 'react';
 import { XPCard } from '@/components/xp-card';
 import { TimerCard } from '@/components/timer-card';
-import { TokenStats } from '@/components/token-stats';
 import { Skeleton } from '@/components/ui/skeleton';
 
 export default function Home() {
