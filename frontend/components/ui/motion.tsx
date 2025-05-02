@@ -3,8 +3,7 @@
 import { forwardRef, HTMLAttributes, ReactNode } from 'react';
 import { cn } from '@/lib/utils';
 
-// Simple motion component that simulates framer-motion behavior
-// This avoids having to install framer-motion as an additional dependency
+
 
 interface MotionProps extends HTMLAttributes<HTMLDivElement> {
   children: ReactNode;

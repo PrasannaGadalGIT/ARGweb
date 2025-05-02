@@ -4,7 +4,7 @@ import { TimerCard } from '@/components/timer-card';
 import { Skeleton } from '@/components/ui/skeleton';
 
 export default function Home() {
-  // Mock data - in a real app, you'd fetch this from an API
+
   const userData = {
     totalXP: 2850,
     level: 12,
