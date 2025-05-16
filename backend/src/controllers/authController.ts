@@ -8,7 +8,9 @@ import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 dotenv.config();
 export const usersignup = async (req:Request , res: Response) => {
+  // console.log(req.body)
     const validatedData = userSignupSchema.parse(req.body);
+    console.log("Validated Data: ",validatedData);
     const { email, password, username } = validatedData;
   
     const hashedPaswword = await bcrypt.hash(password, 10);
@@ -37,7 +39,7 @@ export const usersignup = async (req:Request , res: Response) => {
 };
 
 
-export const userLogin = async (req:express.Request , res: express.Response) => {
+export const userLogin = async (req:Request , res: Response) => {
     const { email, password } = userLoginSchema.parse(req.body);
     const user = await UserModel.findOne({
         $or: [
