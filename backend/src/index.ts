@@ -6,7 +6,7 @@ import connectDB from "./dbconnection";
 import cors from "cors";
 import authRoutes from "./routes/authRoutes";
 const corsOptions = {
-  origin: 'https://ar-gweb.vercel.app/', 
+  origin: 'https://ar-gweb.vercel.app', 
   optionsSuccessStatus: 200 
 };
 const app = express();
