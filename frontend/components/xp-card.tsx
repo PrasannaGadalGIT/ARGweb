@@ -1,10 +1,7 @@
 'use client';
 
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { TrendingUp } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { motion } from './ui/motion';
 
 interface XPCardProps {
   totalXP: number;
@@ -13,42 +10,33 @@ interface XPCardProps {
 }
 
 export function XPCard({ totalXP }: XPCardProps) {
-
-  
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-    >
-      <Card className="overflow-hidden border-2 border-primary/20 bg-card/50 backdrop-blur-sm">
-        <CardHeader className="pb-2">
-          <div className="flex items-center justify-between">
-            <CardTitle className="text-2xl font-bold">XP Progress</CardTitle>
-          </div>
-          <CardDescription>Track your game token experience points</CardDescription>
-        </CardHeader>
+    <div className="overflow-hidden border-2 border-primary/20 bg-card/50 backdrop-blur-sm rounded-lg">
+      <div className="p-4 pb-2">
+        <div className="flex items-center justify-between">
+          <h2 className="text-2xl font-bold">XP Progress</h2>
+        </div>
+        <p className="text-sm text-muted-foreground">Track your game token experience points</p>
+      </div>
 
-        <CardContent className="space-y-6">
-          <div className="grid grid-cols-2 gap-4">
-            <div className={cn(
-              "flex flex-col items-center justify-center rounded-lg border p-4",
-              "bg-gradient-to-br from-primary/5 to-primary/10",
-              "border-primary/20"
-            )}>
-              <TrendingUp className="mb-2 h-8 w-8 text-primary/80" />
-              <span className="text-lg font-bold">{totalXP.toLocaleString()}</span>
-              <span className="text-xs text-muted-foreground">Total XP</span>
-            </div>
+      <div className="p-4 space-y-6">
+        <div className="grid grid-cols-2 gap-4">
+          <div className={cn(
+            "flex flex-col items-center justify-center rounded-lg border p-4",
+            "bg-gradient-to-br from-primary/5 to-primary/10",
+            "border-primary/20"
+          )}>
+            <TrendingUp className="mb-2 h-8 w-8 text-primary/80" />
+            <span className="text-lg font-bold">{totalXP.toLocaleString()}</span>
+            <span className="text-xs text-muted-foreground">Total XP</span>
           </div>
-        </CardContent>
-        <CardFooter className="border-t bg-primary/5 px-6 py-3">
-          <div className="flex w-full items-center justify-between text-sm text-muted-foreground">
-            <span>Last activity: 2 hours ago</span>
-            <Badge variant="secondary" className="bg-primary/20">+45 XP Today</Badge>
-          </div>
-        </CardFooter>
-      </Card>
-    </motion.div>
+        </div>
+      </div>
+
+      <div className="border-t bg-primary/5 px-6 py-3 flex w-full items-center justify-between text-sm text-muted-foreground">
+        <span>Last activity: 2 hours ago</span>
+        <span className="bg-primary/20 text-primary-foreground px-2 py-1 rounded-md text-xs">+45 XP Today</span>
+      </div>
+    </div>
   );
 }

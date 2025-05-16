@@ -3,7 +3,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip } from 'recharts';
 import { cn } from '@/lib/utils';
-import { motion } from './ui/motion';
+
 
 const data = [
   { name: 'Available', value: 65 },
@@ -15,10 +15,8 @@ const COLORS = ['hsl(var(--chart-1))', 'hsl(var(--chart-2))', 'hsl(var(--chart-3
 
 export function TokenStats() {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: 0.2 }}
+    <div
+      
     >
       <Card className="overflow-hidden border-2 border-primary/20 bg-card/50 backdrop-blur-sm">
         <CardHeader className="pb-2">
@@ -69,6 +67,6 @@ export function TokenStats() {
           </div>
         </CardContent>
       </Card>
-    </motion.div>
+    </div>
   );
 }

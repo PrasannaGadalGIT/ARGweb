@@ -7,7 +7,6 @@ import { Badge } from '@/components/ui/badge';
 import { Clock, Gift, AlertTriangle } from 'lucide-react';
 import { useWallet } from '@/hooks/use-wallet';
 import { cn } from '@/lib/utils';
-import { motion } from './ui/motion';
 import { toast } from 'sonner';
 
 const SECONDS_IN_DAY = 86400;
@@ -68,10 +67,9 @@ export function TimerCard() {
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: 0.1 }}
+     <div
+    
+      className="w-full" // Add any additional className if needed
     >
       <Card className={cn(
         "overflow-hidden border-2 bg-card/50 backdrop-blur-sm",
@@ -170,6 +168,6 @@ export function TimerCard() {
           </div>
         </CardFooter>
       </Card>
-    </motion.div>
+    </div>
   );
 }
