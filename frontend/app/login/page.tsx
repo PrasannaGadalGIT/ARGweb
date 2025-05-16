@@ -19,13 +19,30 @@ export default function LoginPage() {
     const onLogin = async () => {
         try {
             setLoading(true);
-            const response = await axios.post("/api/user/login", user);
+            const response = await axios.post("http://localhost:3001/api/login", user);
             console.log("Login success", response.data);
+            
+            // Store the token in localStorage or cookies
+            if (response.data.token) {
+                localStorage.setItem('authToken', response.data.token);
+                
+                // Optionally store user data
+                if (response.data.user) {
+                    localStorage.setItem('userData', JSON.stringify(response.data.user));
+                }
+            }
+            
             toast.success("Login successful!");
-            router.push('/dashboard'); // Change this route as per your app
-        } catch (error: any) {
+            router.push('/'); 
+        } catch (error: unknown) {
             console.log("Login failed", error);
-            toast.error(error.response?.data?.error || error.message || "Login failed");
+            if (axios.isAxiosError(error)) {
+                toast.error(error.response?.data?.error || error.message || "Login failed");
+            } else if (error instanceof Error) {
+                toast.error(error.message || "Login failed");
+            } else {
+                toast.error("Login failed");
+            }
         } finally {
             setLoading(false);
         }
@@ -42,7 +59,6 @@ export default function LoginPage() {
     return (
         <div className="min-h-screen flex items-center justify-center p-4">
             <div className="w-full max-w-md bg-gray-800 rounded-lg shadow-lg p-8 border-2 border-cyan-400 relative overflow-hidden">
-                {/* Decorative elements */}
                 <div className="absolute top-0 left-0 w-full h-1 bg-cyan-400"></div>
                 <div className="absolute top-2 left-2 right-2 h-1 bg-cyan-400 opacity-30"></div>
 
@@ -92,12 +108,11 @@ export default function LoginPage() {
 
                     <div className="text-center mt-4">
                         <Link href="/signup" className="text-cyan-400 hover:text-cyan-300 text-sm underline">
-                            Don't have an account? Sign up
+                            Don&apos;t have an account? Sign up
                         </Link>
                     </div>
                 </div>
 
-                {/* Border corners */}
                 <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-cyan-400"></div>
                 <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-cyan-400"></div>
                 <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-cyan-400"></div>

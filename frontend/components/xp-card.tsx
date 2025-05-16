@@ -1,32 +1,20 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
-import { Sparkles, Trophy, TrendingUp } from 'lucide-react';
+import { TrendingUp } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { motion } from './ui/motion';
 
 interface XPCardProps {
   totalXP: number;
-  level: number;
   nextLevelXP: number;
   currentLevelXP: number;
 }
 
-export function XPCard({ totalXP, level, nextLevelXP, currentLevelXP }: XPCardProps) {
-  const [progress, setProgress] = useState(0);
+export function XPCard({ totalXP }: XPCardProps) {
 
-
-  const xpProgress = Math.floor((currentLevelXP / nextLevelXP) * 100);
   
- 
-  useEffect(() => {
-    const timer = setTimeout(() => setProgress(xpProgress), 500);
-    return () => clearTimeout(timer);
-  }, [xpProgress]);
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -37,15 +25,11 @@ export function XPCard({ totalXP, level, nextLevelXP, currentLevelXP }: XPCardPr
         <CardHeader className="pb-2">
           <div className="flex items-center justify-between">
             <CardTitle className="text-2xl font-bold">XP Progress</CardTitle>
-           
           </div>
           <CardDescription>Track your game token experience points</CardDescription>
         </CardHeader>
 
-
         <CardContent className="space-y-6">
-         
-          
           <div className="grid grid-cols-2 gap-4">
             <div className={cn(
               "flex flex-col items-center justify-center rounded-lg border p-4",
@@ -56,8 +40,6 @@ export function XPCard({ totalXP, level, nextLevelXP, currentLevelXP }: XPCardPr
               <span className="text-lg font-bold">{totalXP.toLocaleString()}</span>
               <span className="text-xs text-muted-foreground">Total XP</span>
             </div>
-            
-           
           </div>
         </CardContent>
         <CardFooter className="border-t bg-primary/5 px-6 py-3">
