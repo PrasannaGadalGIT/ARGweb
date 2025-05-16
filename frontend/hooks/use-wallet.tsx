@@ -13,35 +13,42 @@ export const useWallet = () => {
   const [isVerified, setIsVerified] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    const provider = getProvider();
-    setProvider(provider);
+useEffect(() => {
+  const provider = getProvider();
+  setProvider(provider);
 
-    if (provider) {
-      provider.on('connect', (publicKey: { toString(): string }) => {
-        setPublicKey(publicKey.toString());
+  if (provider) {
+    provider.on('connect', (publicKey: unknown) => {
+      if (typeof publicKey === 'object' && publicKey !== null && 'toString' in publicKey) {
+        setPublicKey((publicKey as { toString(): string }).toString());
         setConnected(true);
-      });
+      }
+    });
 
-      provider.on('disconnect', () => {
+    provider.on('disconnect', () => {
+      setPublicKey(null);
+      setConnected(false);
+      setIsVerified(false);
+    });
+
+    provider.on('accountChanged', (publicKey: unknown) => {
+      if (typeof publicKey === 'object' && publicKey !== null && 'toString' in publicKey) {
+        setPublicKey((publicKey as { toString(): string }).toString());
+        setConnected(true);
+      } else {
         setPublicKey(null);
         setConnected(false);
-        setIsVerified(false);
-      });
-
-      provider.on('accountChanged', (publicKey: { toString(): string } | null) => {
-        setPublicKey(publicKey ? publicKey.toString() : null);
-        setConnected(!!publicKey);
-        setIsVerified(false);
-      });
-
-      // Check if already connected
-      if (provider.isConnected) {
-        setConnected(true);
-        setPublicKey(provider.publicKey?.toString() || null);
       }
+      setIsVerified(false);
+    });
+
+    // Check if already connected
+    if (provider.isConnected) {
+      setConnected(true);
+      setPublicKey(provider.publicKey?.toString() || null);
     }
-  }, []);
+  }
+}, []);
 
   const connectWallet = useCallback(async () => {
     if (!provider) {
