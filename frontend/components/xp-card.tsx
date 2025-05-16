@@ -13,14 +13,14 @@ export function XPCard({ totalXP }: XPCardProps) {
   return (
     <div className="overflow-hidden border-2 border-primary/20 bg-card/50 backdrop-blur-sm rounded-lg">
       <div className="p-4 pb-2">
-        <div className="flex items-center justify-between">
+        <div >
           <h2 className="text-2xl font-bold">XP Progress</h2>
         </div>
         <p className="text-sm text-muted-foreground">Track your game token experience points</p>
       </div>
 
       <div className="p-4 space-y-6">
-        <div className="grid grid-cols-2 gap-4">
+        <div >
           <div className={cn(
             "flex flex-col items-center justify-center rounded-lg border p-4",
             "bg-gradient-to-br from-primary/5 to-primary/10",

@@ -13,11 +13,11 @@ export default function Home() {
   };
 
   return (
-    <div className="container max-w-7xl py-6 md:py-10">
-      <h1 className="mb-4 text-3xl font-bold md:text-4xl">GameToken Dashboard</h1>
+    <div className="container py-6 md:py-10 text-center w-full">
+      <h1 className="mb-4 text-3xl font-bold md:text-4xl ">GameToken Dashboard</h1>
       <p className="mb-8 text-muted-foreground">Track your XP progress and token redemption status</p>
       
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div className=" flex flex-col gap-4 md:flex-row md:gap-8">
         <Suspense fallback={<Skeleton className="h-[400px] w-full" />}>
           <XPCard {...userData} />
         </Suspense>
