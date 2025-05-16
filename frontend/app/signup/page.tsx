@@ -22,7 +22,7 @@ export default function SignupPage() {
     const onSignup = async () => {
         try {
             setLoading(true);
-            const response = await axios.post("http://localhost:3001/api/signup", user);
+            const response = await axios.post("https://argweb-2.onrender.com/api/signup", user);
             console.log("Signup success", response.data);
             toast.success("Signup successful!");
             router.push('/login');

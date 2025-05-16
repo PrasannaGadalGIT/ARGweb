@@ -31,7 +31,7 @@ export default function LoginPage() {
     const onLogin = async () => {
         try {
             setLoading(true);
-            const response = await axios.post("http://localhost:3001/api/login", user);
+            const response = await axios.post("https://argweb-2.onrender.com/api/login", user);
             console.log("Login success", response.data);
 
             if (response.data.token) {
